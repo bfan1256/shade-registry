@@ -2,7 +2,10 @@ import Image from 'next/image'
 
 const TutorialCard = () => {
     return (
-        <div className="shadow-md rounded-md relative border p-9 border-violet-300 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
+        <div className="shadow-md 
+            shadow-violet-100
+            rounded-md relative border p-9 
+            border-violet-300 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
             <div className="flex-shrink-0 flex items-center">
                 <button className="items-center flex space-x-4">
                     <Image

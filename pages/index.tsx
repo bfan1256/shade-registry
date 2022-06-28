@@ -1,4 +1,5 @@
 import FilterLicenses from '@/components/home/FilterLicenses'
+import FilterTasks from '@/components/home/FilterTasks'
 import ModelGrid from '@/components/home/ModelGrid'
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -14,13 +15,14 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className='grid grid-cols-6 gap-12'>
-          <div className='col-span-1 pl-10 h-full min-h-screen bg-violet-50 py-16' id="sidebar">
+        <div className='grid grid-cols-8 gap-12'>
+          <div className='col-span-2 space-y-6 pl-10 h-full min-h-screen bg-violet-50 py-16' id="sidebar">
+            <FilterTasks />
             <FilterLicenses />
           </div>
-          <div className='col-span-5 py-16 pr-10'>
+          <div className='col-span-6 py-16 pr-12'>
             <div className="flex justify-between">
-              <h1>Models</h1>
+              <h1 className="font-semibold text-xl mb-5">Models</h1>
             </div>
             <ModelGrid />
           </div>
