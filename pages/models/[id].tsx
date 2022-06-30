@@ -51,7 +51,7 @@ const IndividualModelPage = () => {
     return (
         <div>
             <div className="bg-violet-50 py-20">
-                <div className="container mx-auto flex items-center justify-between">
+                <div className="md:px-24 mx-auto px-6 flex sm:flex-row flex-col sm:items-center justify-between">
                     <div>
                         <div>
                             <h1 className="font-mono text-3xl font-semibold">C2TAM</h1>
@@ -61,10 +61,10 @@ const IndividualModelPage = () => {
                             sensors={sensors} licenses={licenses} limit={100} />
                         </div>
                     </div>
-                    <div className="space-x-3">
+                    <div className="flex items-center mt-5 lg:mt-0 flex-col space-y-2 w-full sm:w-auto lg:space-y-0 lg:flex-row lg:space-x-3">
                         <button
                             type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm 
+                            className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
                             text-base rounded-md text-white bg-violet-600 hover:bg-violet-700 
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
                         >
@@ -73,7 +73,7 @@ const IndividualModelPage = () => {
                         </button>
                         <button
                             type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm 
+                            className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
                             text-base rounded-md text-white bg-gray-700 hover:bg-gray-800 
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                         >
@@ -94,25 +94,25 @@ const IndividualModelPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-6 divide-x ">
-                <div className="col-span-4 py-16 max-w-4xl mx-auto">
+            <div className="grid px-6 md:px-24 xl:px-0 grid-cols-1 lg:grid-cols-6 lg:divide-x">
+                <div className="lg:col-span-4 py-16 xl:px-24 lg:pr-12">
                     <Markdown>
                         {text}
                     </Markdown>
                 </div>
-                <div className="col-span-2 divide-y">
-                    <div className="pl-10 pr-16 py-10 flex items-center space-x-4">
+                <div className="lg:col-span-2 divide-y order-first lg:order-last">
+                    <div className="lg:pl-10 xl:pr-16 py-10 flex xl:flex-row lg:flex-col xl:items-center space-x-4">
                         <div>
                             <h1 className="">Docker Pulls from Last Month</h1>
                             <h1 className="font-bold text-lg mt-1">125,000</h1>
                         </div>
-                        <div className="pt-4 flex-1">
+                        <div className="pt-4 flex-1 w-full">
                             <Sparklines data={generateRandomData()}>
                                 <SparklinesLine style={{strokeWidth: 1.5, stroke: '#7a3cd9', fill: 'none'}} />
                             </Sparklines>
                         </div>
                     </div>
-                    <div className="pl-10 pr-16 py-10">
+                    <div className="lg:pl-10 xl:pr-16 py-10">
                         <h1 className="font-bold text-lg mb-4">Getting Started with Docker Container in ROS2</h1>
                         <Markdown language="bash">
                             {result}
@@ -120,7 +120,7 @@ const IndividualModelPage = () => {
                         <p className="mt-4 text-sm text-gray-600">For easier set up and installation, use our <a className="text-violet-500">Shade Client</a></p>
                         <p className="text-sm text-gray-600 mt-1">More information on using Docker on <a className="text-blue-500">GitHub</a></p>
                     </div>
-                    <div className="pl-10 pr-16 py-10">
+                    <div className="pl-6 lg:pl-10 lg:pr-16 py-10">
                         <h1 className="text-lg font-bold">Associated Papers</h1>
                         <div className="flex flex-wrap gap-1.5 mt-3">
                         <PaperTag text="arxiv:0234:231423" />
@@ -130,7 +130,7 @@ const IndividualModelPage = () => {
                         </div>
                         
                     </div>
-                    <div className="pl-10 pr-16 py-10">
+                    <div className="lg:pl-10 xl:pr-16 py-10">
                         <h1 className="text-lg font-bold">Contributed By</h1>
                         <div className="mt-4 flex items-center justify-between">
                             <div className="flex items-center space-x-3">

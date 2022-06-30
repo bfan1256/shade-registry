@@ -11,7 +11,7 @@ export default function Navbar() {
       {({ open }) => (
         <>
           <div className="mx-auto px-2 py-2 sm:px-4 lg:px-8">
-            <div className="flex h-16">
+            <div className="flex justify-between sm:justify-auto h-16">
               <div className="flex px-2 lg:px-0">
                 <div className="flex-shrink-0 flex items-center">
                   <button onClick={() => router.push('/')} className="items-center flex space-x-2">
@@ -28,7 +28,7 @@ export default function Navbar() {
                   </button>
                 </div>
               </div>
-              <div className="flex-1 flex items-center justify-start px-2 lg:ml-6 lg:justify-start">
+              <div className="flex-1 xl:flex items-center justify-start px-2 lg:ml-6 lg:justify-start hidden">
                 <div className="max-w-lg w-full lg:max-w-md">
                   <label htmlFor="search" className="sr-only">
                     Search a
@@ -47,7 +47,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <div className="flex-shrink-0 mr-20 flex items-center">
+              <div className="flex-shrink-0 xl:mr-20 flex items-center">
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   <a
@@ -93,7 +93,7 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="hidden lg:ml-4 lg:flex lg:items-center">
+              <div className="hidden xl:ml-4 lg:flex lg:items-center">
                 <a
                   href="#"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"

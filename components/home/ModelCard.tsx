@@ -1,3 +1,4 @@
+import { DownloadIcon } from '@heroicons/react/solid';
 import Image from 'next/image'
 import Labels from '../model/Labels';
 
@@ -31,7 +32,7 @@ const ModelCard = () => {
             <div className="text-gray-400 mt-4 space-x-1 text-xs flex justify-end items-center">
                 <p>Updated May 19, 2021</p>
                 <p>·</p>
-                <p>Downloaded 11.2M</p>
+                <p className="flex items-center"><DownloadIcon className='w-3.5 h-3.5 mr-1' /> 11.2M</p>
             </div>
         </div>
     );

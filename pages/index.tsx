@@ -15,12 +15,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className='grid grid-cols-8 gap-12'>
-          <div className='col-span-2 space-y-6 pl-10 h-full min-h-screen bg-violet-50 py-16' id="sidebar">
+        <div className='grid grid-cols-1 grid-cols-8 gap-12'>
+          <div className='hidden sm:block col-span-2 space-y-6 pl-10 pr-10 2xl:pr-4 h-full min-h-screen bg-violet-50 py-16' id="sidebar">
             <FilterTasks />
             <FilterLicenses />
           </div>
-          <div className='col-span-6 py-16 pr-12'>
+          <div className='col-span-6 py-16 px-4 sm:px-0 sm:pr-12'>
             <div className="flex justify-between">
               <h1 className="font-semibold text-xl mb-5">Models</h1>
             </div>
