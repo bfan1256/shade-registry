@@ -1,8 +1,15 @@
 import { Markdown } from "@/components/markdown/MarkDownRenderer";
+import Labels from "@/components/model/Labels";
 import PaperTag from "@/components/tags/PaperTag";
 import { CodeIcon } from "@heroicons/react/solid";
 import Image from 'next/image'
 import {Sparklines, SparklinesLine} from 'react-sparklines'
+
+
+const tasks = ['image-classification'];
+const papers = ['arxiv:202341'];
+const licenses = ['gpl-3.0'];
+const sensors: string[] = [];
 
 const result = `
 \`\`\`bash
@@ -49,8 +56,9 @@ const IndividualModelPage = () => {
                         <div>
                             <h1 className="font-mono text-3xl font-semibold">C2TAM</h1>
                         </div>
-                        <div>
-                            ...
+                        <div className="mt-3">
+                            <Labels tasks={tasks} papers={papers} 
+                            sensors={sensors} licenses={licenses} limit={100} />
                         </div>
                     </div>
                     <div className="space-x-3">
