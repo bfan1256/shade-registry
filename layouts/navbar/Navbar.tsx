@@ -1,9 +1,7 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
-import { classNames } from '@/utils/general'
 import { useRouter } from 'next/router'
 
 export default function Navbar() {
@@ -16,14 +14,16 @@ export default function Navbar() {
             <div className="flex h-16">
               <div className="flex px-2 lg:px-0">
                 <div className="flex-shrink-0 flex items-center">
-                  <button onClick={() => router.push('/')} className="items-center flex space-x-4">
-                    <Image
-                      height={30}
-                      width={30}
-                      src="/logo.svg"
-                      alt="logo"
-                    />
-                    <h1 className="text-xl mt-1 uppercase font-bold tracking-wide">Shade</h1>
+                  <button onClick={() => router.push('/')} className="items-center flex space-x-2">
+                    <div className="flex space-x-4">
+                      <Image
+                        height={30}
+                        width={30}
+                        src="/logo.svg"
+                        alt="logo"
+                      />
+                      <h1 className="text-xl mt-1 uppercase font-bold tracking-wide">Shade</h1>
+                    </div>
                     <h1 className="text-xl mt-1 italic text-violet-500 -ml-3">Registry</h1>
                   </button>
                 </div>
