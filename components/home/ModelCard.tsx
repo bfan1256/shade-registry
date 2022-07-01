@@ -5,12 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link';
 import Labels from '../model/Labels';
 
-const tasks = ['image-classification'];
-const papers = ['arxiv:202341'];
-const licenses = ['GPL-3.0'];
-const sensors: string[] = [];
-const description = 'RetinaNet is a modern semantic segmentation model that has performed insanely well on COCOS 2017 and is widely used across many different applications'
-
 const ModelCard = ({ model }: { model: Model }) => {
     return (
         <Link href={`/models/${model.id}`}>

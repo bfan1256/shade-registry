@@ -6,45 +6,9 @@ import { getModel, getModels, incrementModelView } from "@/libs/firebase/registr
 import { Model } from "@/types/model";
 import { CodeIcon, CubeIcon, DownloadIcon, EyeIcon } from "@heroicons/react/solid";
 import moment from "moment";
+import Head from 'next/head'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from "react";
-import {Sparklines, SparklinesLine} from 'react-sparklines'
-
-
-const tasks = ['image-classification'];
-const papers = ['arxiv:202341'];
-const licenses = ['gpl-3.0'];
-const sensors: string[] = [];
-
-function generateRandomData() {
-    const data = []
-    for (let i = 0; i < 25; i++) {
-      data.push(Math.random() * 100)
-    }
-    return data
-}
-
-const text = `
-## BERT base model (uncased)
-Pretrained model on English language using a masked language modeling (MLM) objective. It was introduced in this paper and first released in this repository. This model is uncased: it does not make a difference between english and English.
-
-Disclaimer: The team releasing BERT did not write a model card for this model so this model card has been written by the Hugging Face team.
-
-## Model description
-BERT is a transformers model pretrained on a large corpus of English data in a self-supervised fashion. This means it was pretrained on the raw texts only, with no humans labelling them in any way (which is why it can use lots of publicly available data) with an automatic process to generate inputs and labels from those texts. More precisely, it was pretrained with two objectives:
-
-Masked language modeling (MLM): taking a sentence, the model randomly masks 15% of the words in the input then run the entire masked sentence through the model and has to predict the masked words. This is different from traditional recurrent neural networks (RNNs) that usually see the words one after the other, or from autoregressive models like GPT which internally mask the future tokens. It allows the model to learn a bidirectional representation of the sentence.
-Next sentence prediction (NSP): the models concatenates two masked sentences as inputs during pretraining. Sometimes they correspond to sentences that were next to each other in the original text, sometimes not. The model then has to predict if the two sentences were following each other or not.
-This way, the model learns an inner representation of the English language that can then be used to extract features useful for downstream tasks: if you have a dataset of labeled sentences for instance, you can train a standard classifier using the features produced by the BERT model as inputs.
-
-## Intended uses & limitations
-You can use the raw model for either masked language modeling or next sentence prediction, but it's mostly intended to be fine-tuned on a downstream task. See the model hub to look for fine-tuned versions on a task that interests you.
-
-Note that this model is primarily aimed at being fine-tuned on tasks that use the whole sentence (potentially masked) to make decisions, such as sequence classification, token classification or question answering. For tasks such as text generation you should look at model like GPT2.
-
-## How to use
-You can use this model directly with a pipeline for masked language modeling:
-`
 
 const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Model, markdown: string, commands: string[], pulls: number }) => {
     const [currentCommand, setCurrentCommand] = useState('')
@@ -80,6 +44,14 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
     
     return (
         <div>
+            <Head>
+                <title>{model.name} | Shade Registry</title>
+                <meta key="description" name="description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
+                <meta key="og:description"name="og:description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
+                <meta key="og:title" name="og:title" content={`${model.name} | Shade Registry`} />
+                <meta key="twitter:title" name="twitter:title" content={`${model.name} | Shade Registry`} />
+                <meta key="twitter:description" name="twitter:description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
+            </Head>
             <div className="bg-violet-50 py-20">
                 <div className="md:px-24 mx-auto px-6 flex sm:flex-row flex-col sm:items-center justify-between">
                     <div>
