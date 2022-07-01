@@ -9,7 +9,6 @@
     }
 }
 
-figure.wp-block-embed iframe {
-    width: 100%;
-    min-height: 450px
+.markdown img {
+    display: inline-block
 }

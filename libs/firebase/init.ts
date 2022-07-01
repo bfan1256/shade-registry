@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app'
-import {getAnalytics} from 'firebase/analytics'
+import {Analytics, getAnalytics, isSupported} from 'firebase/analytics'
 import {getFirestore, initializeFirestore} from '@firebase/firestore'
 import {getStorage} from '@firebase/storage'
 import {getAuth} from '@firebase/auth'
@@ -19,7 +19,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 initializeFirestore(app, {ignoreUndefinedProperties: true})
 
-const analytics = getAnalytics(app)
+let analytics: undefined | Analytics
+
+isSupported().then(supported => {
+  if (!supported) return
+  analytics = getAnalytics(app)
+})
+
 const auth = getAuth()
 const db = getFirestore()
 const storage = getStorage()

@@ -1,9 +1,10 @@
-const PaperTag = ({ text }: { text: string }) => {
+const PaperTag = ({ text, url }: { text: string, url: string }) => {
     return (
         <div>
-            <span className="inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-violet-100 text-violet-800">
+            <a href={url} target="_blank" 
+                className="inline-flex hover:bg-violet-200 transition items-center px-2.5 py-1 rounded text-xs font-medium bg-violet-100 text-violet-800" rel="noreferrer">
                 {text}
-            </span>
+            </a>
         </div>
     );
 }

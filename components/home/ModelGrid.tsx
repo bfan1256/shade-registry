@@ -9,7 +9,9 @@ const ModelGrid = () => {
 
     useEffect(() => {
         getModels().then((models) => {
+            console.log(models)
             if (models) {
+                console.log('here')
                 setModels(models)
             } else {
                 setModels([])
@@ -23,9 +25,9 @@ const ModelGrid = () => {
                 <div className='col-span-1 sm:col-span-2'>
                     <TutorialCard />
                 </div>
-                {models.map((model) => {
-                    <ModelCard model={model} />
-                })}
+                {models.map((model) => (
+                    <ModelCard key={model.name} model={model} />
+                ))}
             </>
         </div>
     );

@@ -1,10 +1,13 @@
 import { Markdown } from "@/components/markdown/MarkDownRenderer";
+import Dropdown from "@/components/model/Dropdown";
 import Labels from "@/components/model/Labels";
 import PaperTag from "@/components/tags/PaperTag";
-import { getModel, getModels } from "@/libs/firebase/registry";
+import { getModel, getModels, incrementModelView } from "@/libs/firebase/registry";
 import { Model } from "@/types/model";
 import { CodeIcon } from "@heroicons/react/solid";
+import moment from "moment";
 import Image from 'next/image'
+import { useCallback, useEffect, useState } from "react";
 import {Sparklines, SparklinesLine} from 'react-sparklines'
 
 
@@ -12,12 +15,6 @@ const tasks = ['image-classification'];
 const papers = ['arxiv:202341'];
 const licenses = ['gpl-3.0'];
 const sensors: string[] = [];
-
-const result = `
-\`\`\`bash
-docker pull shaderobotics/c2tam
-\`\`\`
-`
 
 function generateRandomData() {
     const data = []
@@ -49,18 +46,44 @@ Note that this model is primarily aimed at being fine-tuned on tasks that use th
 You can use this model directly with a pipeline for masked language modeling:
 `
 
-const IndividualModelPage = ({ model, markdown }: { model: Model, markdown: string }) => {
+const IndividualModelPage = ({ model, markdown, commands }: { model: Model, markdown: string, commands: string[] }) => {
+    const [currentCommand, setCurrentCommand] = useState(commands[0])
+
+    const setNewCommand = useCallback((tag: string) => {
+        const match = commands.find((element: any) => {
+            if (element.includes(tag)) {
+              return true;
+            }
+          });
+        if (match) {
+            setCurrentCommand(match)
+        }
+    }, [commands])
+    useEffect(() => {
+        if (model) {
+            incrementModelView(model.id)
+        }
+    }, [model])
+
+    if (model === undefined) {
+        return (
+            <div></div>
+        )
+    }
+
+
+    
     return (
         <div>
             <div className="bg-violet-50 py-20">
                 <div className="md:px-24 mx-auto px-6 flex sm:flex-row flex-col sm:items-center justify-between">
                     <div>
                         <div>
-                            <h1 className="font-mono text-3xl font-semibold">C2TAM</h1>
+                            <h1 className="font-mono text-3xl font-semibold">{model.name}</h1>
                         </div>
                         <div className="mt-3">
-                            <Labels tasks={tasks} papers={papers} 
-                            sensors={sensors} licenses={licenses} limit={100} />
+                            <Labels tasks={model.tasks} papers={model.papers} 
+                            sensors={model.sensors} license={model.license} limit={100} />
                         </div>
                     </div>
                     <div className="flex items-center mt-5 lg:mt-0 flex-col space-y-2 w-full sm:w-auto lg:space-y-0 lg:flex-row lg:space-x-3">
@@ -73,11 +96,12 @@ const IndividualModelPage = ({ model, markdown }: { model: Model, markdown: stri
                             <CodeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true" />
                             Use in Shade Client
                         </button>
-                        <button
-                            type="button"
+                        <a
+                            href={model.github}
+                            target="_blank"
                             className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
                             text-base rounded-md text-white bg-gray-700 hover:bg-gray-800 
-                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" rel="noreferrer"
                         >
                             <svg
                                 className="w-5 h-5 mr-5"
@@ -92,43 +116,45 @@ const IndividualModelPage = ({ model, markdown }: { model: Model, markdown: stri
                                 />
                             </svg>
                             View GitHub Source
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
             <div className="grid px-6 md:px-24 xl:px-0 grid-cols-1 lg:grid-cols-6 lg:divide-x">
-                <div className="lg:col-span-4 py-16 xl:px-24 lg:pr-12">
+                <div className="lg:col-span-4 pb-16 pt-3 xl:px-24 lg:pr-12">
                     <Markdown>
-                        {text}
+                        {markdown}
                     </Markdown>
                 </div>
                 <div className="lg:col-span-2 divide-y order-first lg:order-last">
-                    <div className="lg:pl-10 xl:pr-16 py-10 flex xl:flex-row lg:flex-col xl:items-center space-x-4">
+                    {/* <div className="lg:pl-10 xl:pr-16 py-10 flex xl:flex-row lg:flex-col xl:items-center space-x-4">
                         <div>
-                            <h1 className="">Docker Pulls from Last Month</h1>
-                            <h1 className="font-bold text-lg mt-1">125,000</h1>
+                            <h1 className="">Total Views</h1>
+                            <h1 className="font-bold text-lg mt-1">{model</h1>
                         </div>
                         <div className="pt-4 flex-1 w-full">
                             <Sparklines data={generateRandomData()}>
                                 <SparklinesLine style={{strokeWidth: 1.5, stroke: '#7a3cd9', fill: 'none'}} />
                             </Sparklines>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="lg:pl-10 xl:pr-16 py-10">
-                        <h1 className="font-bold text-lg mb-4">Getting Started with Docker Container in ROS2</h1>
-                        <Markdown language="bash">
-                            {result}
+                        <div className="flex justify-between items-center mb-4">
+                            <h1 className="font-bold text-lg">Get Started w/ Docker in ROS2</h1>
+                            <Dropdown tags={commands.map((command: string) => command.split(':')[1])} update={(tag: string) => setNewCommand(tag)} />
+                        </div>
+                        <Markdown>
+                            {currentCommand}
                         </Markdown>
                         <p className="mt-4 text-sm text-gray-600">For easier set up and installation, use our <a className="text-violet-500">Shade Client</a></p>
-                        <p className="text-sm text-gray-600 mt-1">More information on using Docker on <a className="text-blue-500">GitHub</a></p>
+                        <p className="text-sm text-gray-600 mt-1">More information on using Docker on <a href={model.github} target="_blank" className="text-blue-500" rel="noreferrer">GitHub</a></p>
                     </div>
-                    <div className="pl-6 lg:pl-10 lg:pr-16 py-10">
+                    <div className="lg:pl-10 lg:pr-16 py-10">
                         <h1 className="text-lg font-bold">Associated Papers</h1>
                         <div className="flex flex-wrap gap-1.5 mt-3">
-                        <PaperTag text="arxiv:0234:231423" />
-                        <PaperTag text="arxiv:234:1234" />
-                        <PaperTag text="arxiv:51:932" />
-                        <PaperTag text="arxiv:9375:42569" />
+                        {model.papers.map((paper) => (
+                            <PaperTag key={paper.name} text={paper.name} url={paper.url}/>
+                        ))}
                         </div>
                         
                     </div>
@@ -144,11 +170,11 @@ const IndividualModelPage = ({ model, markdown }: { model: Model, markdown: stri
                                         alt="logo"
                                     />
                                 </div>
-                                <h1 className="font-semibold">Shade Robotics</h1>
+                                <h1 className="font-semibold">{model.contributed.name}</h1>
                             </div>
-                            <p>Published 09/25/21</p>
+                            <p>Published {model.lastUpdated}</p>
                         </div>
-                        <p className="mt-4 text-gray-600">Shade robotics is creating a modern serverless platform without hardware limitations for robots</p>
+                        <p className="mt-4 text-gray-600">{model.contributed.description}</p>
                     </div>
                 </div>
             </div>
@@ -157,14 +183,36 @@ const IndividualModelPage = ({ model, markdown }: { model: Model, markdown: stri
 }
 
 export async function getStaticProps({params}: any) {
-    const model = await getModel(params.slug)
-    const githubSlug = model?.github.split('github.com')[1]
+    const model = await getModel(params.id)
+    if (!model) {
+        return
+    }
+    const githubSlug = model?.github.split('github.com/')[1]
     const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/main/README.md`)
-    const markdown = await res.text()
-  
+    let markdown = await res.text()
+
+    if (markdown.indexOf('404: Not Found') !== -1) {
+        console.log('here')
+        const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/master/README.md`)
+        markdown = await res.text()
+    }
+
+    const repository = model.docker.split('/').pop()
+
+    const dockerReq = await fetch(`https://hub.docker.com/v2/repositories/shaderobotics/${repository}/tags`)
+    const response = await dockerReq.json()
+    const tags = response['results']
+
+    const commands = tags.map((tag: any) => {
+        return `\`\`\`bash 
+docker pull ${model.docker.split('/r/')[1]}:${tag.name}`
+    })
+
+    model.lastUpdated = moment(model?.lastUpdated.toDate()).format('LL')
     return {
       props: {
         model,
+        commands,
         markdown,
       },
       revalidate: 60,
