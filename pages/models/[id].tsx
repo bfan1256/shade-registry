@@ -1,6 +1,8 @@
 import { Markdown } from "@/components/markdown/MarkDownRenderer";
 import Labels from "@/components/model/Labels";
 import PaperTag from "@/components/tags/PaperTag";
+import { getModel, getModels } from "@/libs/firebase/registry";
+import { Model } from "@/types/model";
 import { CodeIcon } from "@heroicons/react/solid";
 import Image from 'next/image'
 import {Sparklines, SparklinesLine} from 'react-sparklines'
@@ -47,7 +49,7 @@ Note that this model is primarily aimed at being fine-tuned on tasks that use th
 You can use this model directly with a pipeline for masked language modeling:
 `
 
-const IndividualModelPage = () => {
+const IndividualModelPage = ({ model, markdown }: { model: Model, markdown: string }) => {
     return (
         <div>
             <div className="bg-violet-50 py-20">
@@ -153,5 +155,31 @@ const IndividualModelPage = () => {
         </div>
     );
 }
+
+export async function getStaticProps({params}: any) {
+    const model = await getModel(params.slug)
+    const githubSlug = model?.github.split('github.com')[1]
+    const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/main/README.md`)
+    const markdown = await res.text()
+  
+    return {
+      props: {
+        model,
+        markdown,
+      },
+      revalidate: 60,
+    }
+  }
+
+export async function getStaticPaths() {
+    const models = await getModels()
+  
+    return {
+      paths: models?.map((model: Model) => `/models/${model.name}`) || [],
+      fallback: true,
+    }
+}
+
+
 
 export default IndividualModelPage;

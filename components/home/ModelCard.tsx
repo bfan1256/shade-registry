@@ -1,3 +1,4 @@
+import { Model } from '@/types/model';
 import { DownloadIcon } from '@heroicons/react/solid';
 import Image from 'next/image'
 import Labels from '../model/Labels';
@@ -8,7 +9,7 @@ const licenses = ['GPL-3.0'];
 const sensors: string[] = [];
 const description = 'RetinaNet is a modern semantic segmentation model that has performed insanely well on COCOS 2017 and is widely used across many different applications'
 
-const ModelCard = () => {
+const ModelCard = ({ model }: { model: Model }) => {
     return (
         <div className="border p-6 flex flex-col h-full rounded-md border-gray-100 shadow-md shadow-gray-100">
             <div className="flex justify-between items-center">
