@@ -4,7 +4,7 @@ import Labels from "@/components/model/Labels";
 import PaperTag from "@/components/tags/PaperTag";
 import { getModel, getModels, incrementModelView } from "@/libs/firebase/registry";
 import { Model } from "@/types/model";
-import { CodeIcon } from "@heroicons/react/solid";
+import { CodeIcon, CubeIcon, DownloadIcon, EyeIcon } from "@heroicons/react/solid";
 import moment from "moment";
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from "react";
@@ -46,8 +46,8 @@ Note that this model is primarily aimed at being fine-tuned on tasks that use th
 You can use this model directly with a pipeline for masked language modeling:
 `
 
-const IndividualModelPage = ({ model, markdown, commands }: { model: Model, markdown: string, commands: string[] }) => {
-    const [currentCommand, setCurrentCommand] = useState(commands[0])
+const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Model, markdown: string, commands: string[], pulls: number }) => {
+    const [currentCommand, setCurrentCommand] = useState('')
 
     const setNewCommand = useCallback((tag: string) => {
         const match = commands.find((element: any) => {
@@ -57,6 +57,11 @@ const IndividualModelPage = ({ model, markdown, commands }: { model: Model, mark
           });
         if (match) {
             setCurrentCommand(match)
+        }
+    }, [commands])
+    useEffect(() => {
+        if (commands) {
+            setCurrentCommand(commands[0])
         }
     }, [commands])
     useEffect(() => {
@@ -127,17 +132,21 @@ const IndividualModelPage = ({ model, markdown, commands }: { model: Model, mark
                     </Markdown>
                 </div>
                 <div className="lg:col-span-2 divide-y order-first lg:order-last">
-                    {/* <div className="lg:pl-10 xl:pr-16 py-10 flex xl:flex-row lg:flex-col xl:items-center space-x-4">
+                    <div className="lg:pl-10 xl:pr-16 py-10 flex justify-between xl:flex-row flex-col space-y-8 xl:space-y-0 xl:items-center xl:space-x-8">
                         <div>
-                            <h1 className="">Total Views</h1>
-                            <h1 className="font-bold text-lg mt-1">{model</h1>
+                            <h1 className="font-bold text-lg flex items-center"><CubeIcon className="w-6 h-6 mr-3 mb-1" /> Model Stats</h1>
                         </div>
-                        <div className="pt-4 flex-1 w-full">
-                            <Sparklines data={generateRandomData()}>
-                                <SparklinesLine style={{strokeWidth: 1.5, stroke: '#7a3cd9', fill: 'none'}} />
-                            </Sparklines>
+                        <div className="flex items-center space-x-10">
+                            <div>
+                                <h1 className="flex items-center">Total Views</h1>
+                                <h1 className="font-bold text-lg mt-1 flex items-center"><EyeIcon className="w-5 h-5 mr-2" /> {model.views}</h1>
+                            </div>
+                            <div>
+                                <h1 className="">Total Docker Pulls</h1>
+                                <h1 className="font-bold text-lg mt-1 flex items-center"><DownloadIcon className="w-5 h-5 mr-2" />{pulls}</h1>
+                            </div>
                         </div>
-                    </div> */}
+                    </div>
                     <div className="lg:pl-10 xl:pr-16 py-10">
                         <div className="flex justify-between items-center mb-4">
                             <h1 className="font-bold text-lg">Get Started w/ Docker in ROS2</h1>
@@ -187,12 +196,12 @@ export async function getStaticProps({params}: any) {
     if (!model) {
         return
     }
+
     const githubSlug = model?.github.split('github.com/')[1]
     const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/main/README.md`)
     let markdown = await res.text()
 
     if (markdown.indexOf('404: Not Found') !== -1) {
-        console.log('here')
         const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/master/README.md`)
         markdown = await res.text()
     }
@@ -203,6 +212,9 @@ export async function getStaticProps({params}: any) {
     const response = await dockerReq.json()
     const tags = response['results']
 
+    const repositoryReq = await fetch(`https://hub.docker.com/v2/repositories/shaderobotics/${repository}`)
+    const repositoryResponse = await repositoryReq.json()
+    const pulls = repositoryResponse['pull_count']
     const commands = tags.map((tag: any) => {
         return `\`\`\`bash 
 docker pull ${model.docker.split('/r/')[1]}:${tag.name}`
@@ -214,6 +226,7 @@ docker pull ${model.docker.split('/r/')[1]}:${tag.name}`
         model,
         commands,
         markdown,
+        pulls,
       },
       revalidate: 60,
     }
