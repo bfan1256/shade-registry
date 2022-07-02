@@ -40,16 +40,19 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
         )
     }
 
+    const title = `${model.name} | Shade Registry`
 
     
     return (
         <div>
             <Head>
-                <title>{model.name} | Shade Registry</title>
+                <title>
+                    {title}
+                </title>
                 <meta key="description" name="description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
                 <meta key="og:description"name="og:description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
-                <meta key="og:title" name="og:title" content={`${model.name} | Shade Registry`} />
-                <meta key="twitter:title" name="twitter:title" content={`${model.name} | Shade Registry`} />
+                <meta key="og:title" name="og:title" content={title} />
+                <meta key="twitter:title" name="twitter:title" content={title} />
                 <meta key="twitter:description" name="twitter:description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
             </Head>
             <div className="bg-violet-50 py-20">
