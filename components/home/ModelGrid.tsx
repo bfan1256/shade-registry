@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import ModelCard from "./ModelCard";
 import TutorialCard from "./TutorialCard";
 
-const ModelGrid = () => {
+const ModelGrid = ({ results }: { results: Model[] }) => {
     const [models, setModels] = useState<Model[]>([]);
-
+    console.log(results)
     useEffect(() => {
         getModels().then((models) => {
             console.log(models)
             if (models) {
-                console.log('here')
                 setModels(models)
             } else {
                 setModels([])

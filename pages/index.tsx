@@ -1,11 +1,15 @@
 import FilterLicenses from '@/components/home/FilterLicenses'
 import FilterTasks from '@/components/home/FilterTasks'
 import ModelGrid from '@/components/home/ModelGrid'
+import { REGISTRY_INDEX, useAlgoliaSearch } from '@/libs/algolia'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
+  const router = useRouter()
+  const { query } = router.query
+  const results = useAlgoliaSearch(REGISTRY_INDEX, query as string)
   return (
     <div>
       <Head>
@@ -27,7 +31,7 @@ const Home: NextPage = () => {
             <div className="flex justify-between">
               <h1 className="font-semibold text-xl mb-5">Models</h1>
             </div>
-            <ModelGrid />
+            <ModelGrid results={results as any}/>
           </div>
         </div>
       </main>
