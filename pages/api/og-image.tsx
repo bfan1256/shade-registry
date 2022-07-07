@@ -3,7 +3,7 @@ import {EyeIcon, DownloadIcon} from '@heroicons/react/solid';
 import IBMPlexSansRegular from 'fonts/IBMPlexSansRegular';
 import IBMPlexSansBold from "fonts/IBMPlexSansBold";
 
-const IMAGE_URL = process.env.VERCEL_URL ?? 'https://shade-registry.vercel.app'
+const IMAGE_URL = 'https://' + (process.env.NEXT_PUBLIC_VERCEL_URL ?? 'shade-registry.vercel.app')
 
 interface QueryParams {
     title: string;
