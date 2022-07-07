@@ -6,7 +6,7 @@ import IBMPlexSansBold from "fonts/IBMPlexSansBold";
 const IMAGE_URL = process.env.VERCEL_URL ?? 'https://shade-registry.vercel.app'
 
 interface QueryParams {
-    modelName: string;
+    title: string;
 }
 
 const style = `
@@ -127,7 +127,7 @@ const style = `
 
 export default withOGImage<'query', QueryParams>({
     template: {
-        react: async ({name}) => {
+        react: async ({title}) => {
             return (
                 <html>
                 <head>
@@ -158,7 +158,7 @@ export default withOGImage<'query', QueryParams>({
                         width={400}
                         src={`${IMAGE_URL}/construction_2.svg`}
                     />
-                    <h1 className="title">{name}</h1>
+                    <h1 className="title">{title}</h1>
                     <div className="info">
                         <div className="views">
                             <EyeIcon className="icon"/>
