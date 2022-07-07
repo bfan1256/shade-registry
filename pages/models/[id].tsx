@@ -1,24 +1,30 @@
-import { Markdown } from "@/components/markdown/MarkDownRenderer";
+import {Markdown} from "@/components/markdown/MarkDownRenderer";
 import Dropdown from "@/components/model/Dropdown";
 import Labels from "@/components/model/Labels";
 import PaperTag from "@/components/tags/PaperTag";
-import { getModel, getModels, incrementModelView } from "@/libs/firebase/registry";
-import { Model } from "@/types/model";
-import { CodeIcon, CubeIcon, DownloadIcon, EyeIcon } from "@heroicons/react/solid";
+import {getModel, getModels, incrementModelView} from "@/libs/firebase/registry";
+import {Model} from "@/types/model";
+import {CodeIcon, CubeIcon, DownloadIcon, EyeIcon} from "@heroicons/react/solid";
 import moment from "moment";
 import Head from 'next/head'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 
-const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Model, markdown: string, commands: string[], pulls: number }) => {
+const IndividualModelPage = ({
+                                 model,
+                                 markdown,
+                                 commands,
+                                 pulls
+                             }: { model: Model, markdown: string, commands: string[], pulls: number }) => {
+    // TODO fix bastardization of state
     const [currentCommand, setCurrentCommand] = useState('')
 
     const setNewCommand = useCallback((tag: string) => {
         const match = commands.find((element: any) => {
             if (element.includes(tag)) {
-              return true;
+                return true;
             }
-          });
+        });
         if (match) {
             setCurrentCommand(match)
         }
@@ -36,24 +42,28 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
 
     if (model === undefined) {
         return (
-            <div></div>
+            <div></div> // TODO 404 in getStaticProps instead
         )
     }
 
     const title = `${model.name} | Shade Registry`
 
-    
+
     return (
         <div>
             <Head>
                 <title>
                     {title}
                 </title>
-                <meta key="description" name="description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
-                <meta key="og:description"name="og:description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
-                <meta key="og:title" name="og:title" content={title} />
-                <meta key="twitter:title" name="twitter:title" content={title} />
-                <meta key="twitter:description" name="twitter:description" content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`} />
+                <meta property="description"
+                      content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`}/>
+                <meta property="og:description"
+                      content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`}/>
+                <meta property="og:title" content={title}/>
+                <meta key="og:image" content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? 'localhost:3000'}/api/og-image?name=${model.name}`}/>
+                <meta property="twitter:title" content={title}/>
+                <meta property="twitter:description"
+                      content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`}/>
             </Head>
             <div className="bg-violet-50 py-20">
                 <div className="md:px-24 mx-auto px-6 flex sm:flex-row flex-col sm:items-center justify-between">
@@ -62,18 +72,19 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
                             <h1 className="font-mono text-3xl font-semibold">{model.name}</h1>
                         </div>
                         <div className="mt-3">
-                            <Labels tasks={model.tasks} papers={model.papers} 
-                            sensors={model.sensors} license={model.license} limit={100} />
+                            <Labels tasks={model.tasks} papers={model.papers}
+                                    sensors={model.sensors} license={model.license} limit={100}/>
                         </div>
                     </div>
-                    <div className="flex items-center mt-5 lg:mt-0 flex-col space-y-2 w-full sm:w-auto lg:space-y-0 lg:flex-row lg:space-x-3">
+                    <div
+                        className="flex items-center mt-5 lg:mt-0 flex-col space-y-2 w-full sm:w-auto lg:space-y-0 lg:flex-row lg:space-x-3">
                         <button
                             type="button"
                             className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
                             text-base rounded-md text-white bg-violet-600 hover:bg-violet-700 
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
                         >
-                            <CodeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true" />
+                            <CodeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true"/>
                             Use in Shade Client
                         </button>
                         <a
@@ -107,40 +118,48 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
                     </Markdown>
                 </div>
                 <div className="lg:col-span-2 divide-y order-first lg:order-last">
-                    <div className="lg:pl-10 xl:pr-16 py-10 flex justify-between xl:flex-row flex-col space-y-8 xl:space-y-0 xl:items-center xl:space-x-8">
+                    <div
+                        className="lg:pl-10 xl:pr-16 py-10 flex justify-between xl:flex-row flex-col space-y-8 xl:space-y-0 xl:items-center xl:space-x-8">
                         <div>
-                            <h1 className="font-bold text-lg flex items-center"><CubeIcon className="w-6 h-6 mr-3 mb-1" /> Model Stats</h1>
+                            <h1 className="font-bold text-lg flex items-center"><CubeIcon
+                                className="w-6 h-6 mr-3 mb-1"/> Model Stats</h1>
                         </div>
                         <div className="flex items-center space-x-10">
                             <div>
                                 <h1 className="flex items-center">Total Views</h1>
-                                <h1 className="font-bold text-lg mt-1 flex items-center"><EyeIcon className="w-5 h-5 mr-2" /> {model.views}</h1>
+                                <h1 className="font-bold text-lg mt-1 flex items-center"><EyeIcon
+                                    className="w-5 h-5 mr-2"/> {model.views}</h1>
                             </div>
                             <div>
                                 <h1 className="">Total Docker Pulls</h1>
-                                <h1 className="font-bold text-lg mt-1 flex items-center"><DownloadIcon className="w-5 h-5 mr-2" />{pulls}</h1>
+                                <h1 className="font-bold text-lg mt-1 flex items-center"><DownloadIcon
+                                    className="w-5 h-5 mr-2"/>{pulls}</h1>
                             </div>
                         </div>
                     </div>
                     <div className="lg:pl-10 xl:pr-16 py-10">
                         <div className="flex justify-between items-center mb-4">
                             <h1 className="font-bold text-lg">Get Started w/ Docker in ROS2</h1>
-                            <Dropdown tags={commands.map((command: string) => command.split(':')[1])} update={(tag: string) => setNewCommand(tag)} />
+                            <Dropdown tags={commands.map((command: string) => command.split(':')[1])}
+                                      update={(tag: string) => setNewCommand(tag)}/>
                         </div>
                         <Markdown>
                             {currentCommand}
                         </Markdown>
-                        <p className="mt-4 text-sm text-gray-600">For easier set up and installation, use our <a className="text-violet-500">Shade Client</a></p>
-                        <p className="text-sm text-gray-600 mt-1">More information on using Docker on <a href={model.github} target="_blank" className="text-blue-500" rel="noreferrer">GitHub</a></p>
+                        <p className="mt-4 text-sm text-gray-600">For easier set up and installation, use our <a
+                            className="text-violet-500">Shade Client</a></p>
+                        <p className="text-sm text-gray-600 mt-1">More information on using Docker on <a
+                            href={model.github} target="_blank" className="text-blue-500" rel="noreferrer">GitHub</a>
+                        </p>
                     </div>
                     <div className="lg:pl-10 lg:pr-16 py-10">
                         <h1 className="text-lg font-bold">Associated Papers</h1>
                         <div className="flex flex-wrap gap-1.5 mt-3">
-                        {model.papers.map((paper) => (
-                            <PaperTag key={paper.name} text={paper.name} url={paper.url}/>
-                        ))}
+                            {model.papers.map((paper) => (
+                                <PaperTag key={paper.name} text={paper.name} url={paper.url}/>
+                            ))}
                         </div>
-                        
+
                     </div>
                     <div className="lg:pl-10 xl:pr-16 py-10">
                         <h1 className="text-lg font-bold">Contributed By</h1>
@@ -166,7 +185,9 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
     );
 }
 
+// TODO add typing
 export async function getStaticProps({params}: any) {
+    // TODO cleanup
     const model = await getModel(params.id)
     
     if (!model) {
@@ -198,25 +219,24 @@ docker pull ${model.docker.split('/r/')[1]}:${tag.name}`
 
     model.lastUpdated = moment(model?.lastUpdated.toDate()).format('LL')
     return {
-      props: {
-        model,
-        commands,
-        markdown,
-        pulls,
-      },
-      revalidate: 60,
+        props: {
+            model,
+            commands,
+            markdown,
+            pulls,
+        },
+        revalidate: 60,
     }
-  }
+}
 
 export async function getStaticPaths() {
     const models = await getModels()
-  
+
     return {
       paths: models?.map((model: Model) => `/models/${model.id}`) || [],
       fallback: true,
     }
 }
-
 
 
 export default IndividualModelPage;
