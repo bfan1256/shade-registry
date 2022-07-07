@@ -168,6 +168,7 @@ const IndividualModelPage = ({ model, markdown, commands, pulls }: { model: Mode
 
 export async function getStaticProps({params}: any) {
     const model = await getModel(params.id)
+    
     if (!model) {
         return
     }
@@ -211,7 +212,7 @@ export async function getStaticPaths() {
     const models = await getModels()
   
     return {
-      paths: models?.map((model: Model) => `/models/${model.name}`) || [],
+      paths: models?.map((model: Model) => `/models/${model.id}`) || [],
       fallback: true,
     }
 }
