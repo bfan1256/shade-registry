@@ -3,45 +3,53 @@ import {EyeIcon, DownloadIcon} from '@heroicons/react/solid';
 import IBMPlexSansRegular from 'fonts/IBMPlexSansRegular';
 import IBMPlexSansBold from "fonts/IBMPlexSansBold";
 
-const IMAGE_URL = process.env.VERCEL_URL ?? 'https://shaderobotics.com'
+const IMAGE_URL = process.env.VERCEL_URL ?? 'https://shade-registry.vercel.app'
 
 interface QueryParams {
-    name: string;
+    modelName: string;
 }
 
 const style = `
 @font-face {
-    font-family: 'IBM Plex Sans';
+    font-family: 'IBMPlexSans';
     font-style:  normal;
     font-weight: normal;
-    src: url(data:font/ttf;charset=utf-8;base64,${IBMPlexSansRegular}) format('ttf');
+    src: url(data:font/truetype;charset=utf-8;base64,${IBMPlexSansRegular}) format('truetype');
 }
 
 @font-face {
-    font-family: 'IBM Plex Sans';
+    font-family: 'IBMPlexSans';
     font-style:  normal;
     font-weight: bold;
-    src: url(data:font/ttf;charset=utf-8;base64,${IBMPlexSansBold}) format('ttf');
+    src: url(data:font/truetype;charset=utf-8;base64,${IBMPlexSansBold}) format('truetype');
 }
+
+@keyframes spin {
+  from { transform: rotate(-30deg); }
+  to { transform: rotate(330deg); }
+}
+
   
 * {
     margin: 0;
     padding: 0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'IBMPlexSans', serif;
 }
 
-.drone .img {
+.drone {
     position: absolute;
 }
 
-.drone .img .left {
-    right: 200px;
-    top: 100px;
+.drone.left {
+    right: 270px;
+    top: 35px;
+    transform: rotate(-30deg);
+    animation: spin 2s linear 4s infinite;
 }
 
-.drone .img .right {
-    right: 200px;
-    top: 100px;
+.drone.right {
+    right: 60px;
+    top: 90px;
 }
 
 .og-container {
@@ -50,18 +58,20 @@ const style = `
     box-sizing: border-box;
     position: relative;
     
-    padding: 50px 70px;
+    padding: 45px 75px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
+    background: linear-gradient(90deg, rgba(252, 248, 255) 0%, rgba(254, 244, 245) 100%);
 }
 
 .title {
-    font-size: 64px;
+    font-size: 70px;
     font-weight: bold;
     
     position: absolute;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
 }
 
@@ -69,11 +79,11 @@ const style = `
 .logo {
     display: flex;
     align-items: center;
-    gap: 20px;
 }
 
 .logo .text {
-    font-size: 24px;
+    margin-left: 20px;
+    font-size: 28px;
     font-weight: bold;
 }
 
@@ -110,7 +120,7 @@ const style = `
 
 .info {
     display: flex;
-    gap: 150px;
+    gap: 100px;
     margin-bottom: 70px;
 }
 `
@@ -128,26 +138,24 @@ export default withOGImage<'query', QueryParams>({
                     <div className="logo">
                         <img
                             className="img"
-                            height={50}
-                            width={50}
+                            width={55}
                             src={`${IMAGE_URL}/logo.svg`}
                         />
                         <p className="text">SHADE</p>
                     </div>
                     <img
                         className="drone img left"
-                        height={100}
-                        width={100}
+                        width={170}
                         src={`${IMAGE_URL}/Calque_1.svg`}
                     />
                     <img
                         className="drone img right"
-                        width={100}
+                        width={170}
                         src={`${IMAGE_URL}/Calque_1.svg`}
                     />
                     <img
                         className="construction img"
-                        width={250}
+                        width={400}
                         src={`${IMAGE_URL}/construction_2.svg`}
                     />
                     <h1 className="title">{name}</h1>
