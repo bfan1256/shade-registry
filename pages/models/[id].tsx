@@ -60,7 +60,7 @@ const IndividualModelPage = ({
                 <meta property="og:description"
                       content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`}/>
                 <meta property="og:title" content={title}/>
-                <meta key="og:image" content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? 'localhost:3000'}/api/og-image?modelName=${model.name}`}/>
+                <meta property="og:image" content={`https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? 'localhost:3000'}/api/og-image?modelName=${model.name}`}/>
                 <meta property="twitter:title" content={title}/>
                 <meta property="twitter:description"
                       content={`Ready-to-use Integration of ${model.name} via Shade Client or Docker ROS2 Wrapper. ${model.description}`}/>
