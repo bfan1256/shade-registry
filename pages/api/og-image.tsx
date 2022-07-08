@@ -2,6 +2,7 @@ import {withOGImage} from 'next-api-og-image';
 import {EyeIcon, DownloadIcon} from '@heroicons/react/solid';
 import IBMPlexSansRegular from 'fonts/IBMPlexSansRegular';
 import IBMPlexSansBold from "fonts/IBMPlexSansBold";
+import { NextApiRequest } from "next";
 
 const IMAGE_URL = 'https://' + (process.env.NEXT_PUBLIC_VERCEL_URL ?? 'shade-registry.vercel.app')
 
@@ -24,12 +25,6 @@ const style = `
     src: url(data:font/truetype;charset=utf-8;base64,${IBMPlexSansBold}) format('truetype');
 }
 
-@keyframes spin {
-  from { transform: rotate(-30deg); }
-  to { transform: rotate(330deg); }
-}
-
-  
 * {
     margin: 0;
     padding: 0;
@@ -44,7 +39,6 @@ const style = `
     right: 270px;
     top: 35px;
     transform: rotate(-30deg);
-    animation: spin 2s linear 4s infinite;
 }
 
 .drone.right {
