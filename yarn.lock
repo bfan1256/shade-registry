@@ -2826,6 +2826,15 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
+next-api-og-image@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/next-api-og-image/-/next-api-og-image-4.1.0.tgz#a0f50a4ba8c67efe848c4b33878265923c60fe5e"
+  integrity sha512-zm747fAeschqdy36jmkObKqbwYhTA8zrsrsEy6Xgy5XNoxFVtYurXbk9IpcEWJBQCCYtazPNy27svUbE2lcf3Q==
+  dependencies:
+    deepmerge "^4.2.2"
+    puppeteer-core "^10.4.0"
+    twemoji "^13.1.0"
+
 next@12.1.6:
   version "12.1.6"
   resolved "https://registry.yarnpkg.com/next/-/next-12.1.6.tgz#eb205e64af1998651f96f9df44556d47d8bbc533"
