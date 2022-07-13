@@ -21,7 +21,7 @@ const ModelCard = ({ model }: { model: Model }) => {
                     </div>
                 </div>
                 <p className="text-sm mt-2 flex-1 text-gray-500">
-                    {model.description.slice(0, 110)}{model.description.length > 110 ? '...' : null}
+                    {model.description ? model.description.slice(0, 110) : 'No Description'}{model.description && model.description.length > 110 ? '...' : null}
                 </p>
                 <div className='mt-3'>
                     <Labels tasks={model.tasks} papers={model.papers} 

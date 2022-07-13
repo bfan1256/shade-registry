@@ -189,6 +189,10 @@ const IndividualModelPage = ({
 export async function getStaticProps({params}: any) {
     // TODO cleanup
     const model = await getModel(params.id)
+
+    if (model && !model.description) {
+        model.description = 'No Description'
+    }
     
     if (!model) {
         return
