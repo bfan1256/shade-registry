@@ -15,9 +15,9 @@ const Labels = ({ tasks, papers, sensors, license, limit = 35 }: { tasks: string
             src={data['icon']} />
         )
     })
-    const paperTags = papers.map((value: Paper) => (
+    const paperTags = papers ? papers?.map((value: Paper) => (
         <PaperTag key={value.name} text={value.name} url={value.url} />
-    ))
+    )) : []
     const allTags = [...taskTags, (<LicenseTag key={license} text={license} />), ...paperTags]
     return (
         <div className="flex flex-wrap gap-2">

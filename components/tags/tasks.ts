@@ -9,9 +9,9 @@ export const tasks: any = {
         'name': 'Image Segmentation',
         'bg': 'from-gray-50 to-purple-100'
     },
-    'object-recognition': {
+    'object-detection': {
         'icon': '/tasks/object-recognition.svg',
-        'name': 'Object Recognition',
+        'name': 'Object Detection',
         'bg': 'from-gray-50 to-blue-100'
     },
     'voice-recognition': {

@@ -152,15 +152,19 @@ const IndividualModelPage = ({
                             href={model.github} target="_blank" className="text-blue-500" rel="noreferrer">GitHub</a>
                         </p>
                     </div>
-                    <div className="lg:pl-10 lg:pr-16 py-10">
-                        <h1 className="text-lg font-bold">Associated Papers</h1>
-                        <div className="flex flex-wrap gap-1.5 mt-3">
-                            {model.papers.map((paper) => (
-                                <PaperTag key={paper.name} text={paper.name} url={paper.url}/>
-                            ))}
-                        </div>
+                    {
+                        model.papers && (
+                            <div className="lg:pl-10 lg:pr-16 py-10">
+                                <h1 className="text-lg font-bold">Associated Papers</h1>
+                                <div className="flex flex-wrap gap-1.5 mt-3">
+                                    {model.papers.map((paper) => (
+                                        <PaperTag key={paper.name} text={paper.name} url={paper.url}/>
+                                    ))}
+                                </div>
 
-                    </div>
+                            </div>
+                        )
+                    }
                     <div className="lg:pl-10 xl:pr-16 py-10">
                         <h1 className="text-lg font-bold">Contributed By</h1>
                         <div className="mt-4 flex items-center justify-between">
@@ -199,8 +203,11 @@ export async function getStaticProps({params}: any) {
     }
 
     const githubSlug = model?.github.split('github.com/')[1]
+    console.log(githubSlug)
     const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/main/README.md`)
     let markdown = await res.text()
+
+    console.log(markdown)
 
     if (markdown.indexOf('404: Not Found') !== -1) {
         const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/master/README.md`)
@@ -218,7 +225,7 @@ export async function getStaticProps({params}: any) {
     const pulls = repositoryResponse['pull_count']
     const commands = tags.map((tag: any) => {
         return `\`\`\`bash 
-docker pull ${model.docker.split('/r/')[1]}:${tag.name}`
+docker pull ${model.docker.split('/shaderobotics/')[1]}:${tag.name}`
     })
 
     model.lastUpdated = moment(model?.lastUpdated.toDate()).format('LL')
