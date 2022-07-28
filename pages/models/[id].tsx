@@ -75,22 +75,10 @@ const IndividualModelPage = ({
                             <Labels tasks={model.tasks} papers={model.papers}
                                     sensors={model.sensors} license={model.license} limit={100}/>
                         </div>
-                    </div>
-                    <div
-                        className="flex items-center mt-5 lg:mt-0 flex-col space-y-2 w-full sm:w-auto lg:space-y-0 lg:flex-row lg:space-x-3">
-                        <button
-                            type="button"
-                            className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
-                            text-base rounded-md text-white bg-violet-600 hover:bg-violet-700 
-                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
-                        >
-                            <CodeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true"/>
-                            Use in Shade Client
-                        </button>
                         <a
                             href={model.github}
                             target="_blank"
-                            className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
+                            className="inline-flex w-full sm:w-auto items-center px-4 py-3 mt-8 border border-transparent shadow-sm 
                             text-base rounded-md text-white bg-gray-700 hover:bg-gray-800 
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" rel="noreferrer"
                         >
@@ -109,15 +97,30 @@ const IndividualModelPage = ({
                             View GitHub Source
                         </a>
                     </div>
+                    <div
+                        className="flex items-center mt-5 lg:mt-0 flex-col space-y-2 w-full sm:w-auto lg:space-y-0 lg:flex-row lg:space-x-3">
+                            <Markdown>
+                                {currentCommand}
+                            </Markdown>
+                        {/* <button
+                            type="button"
+                            className="inline-flex w-full sm:w-auto items-center px-4 py-2 border border-transparent shadow-sm 
+                            text-base rounded-md text-white bg-violet-600 hover:bg-violet-700 
+                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
+                        >
+                            <CodeIcon className="-ml-1 mr-3 h-5 w-5" aria-hidden="true"/>
+                            Use in Shade Client
+                        </button> */}
+                    </div>
                 </div>
             </div>
-            <div className="grid px-6 md:px-24 xl:px-0 grid-cols-1 lg:grid-cols-6 lg:divide-x">
-                <div className="lg:col-span-4 pb-16 pt-3 xl:px-24 lg:pr-12">
+            <div className="grid px-6 md:px-24 xl:px-0 grid-cols-1 lg:grid-cols-8 lg:divide-x">
+                <div className="lg:col-span-5 pb-16 pt-3 xl:px-24 lg:pr-12">
                     <Markdown>
                         {markdown}
                     </Markdown>
                 </div>
-                <div className="lg:col-span-2 divide-y order-first lg:order-last">
+                <div className="lg:col-span-3 divide-y order-first lg:order-last">
                     <div
                         className="lg:pl-10 xl:pr-16 py-10 flex justify-between xl:flex-row flex-col space-y-8 xl:space-y-0 xl:items-center xl:space-x-8">
                         <div>
@@ -137,7 +140,7 @@ const IndividualModelPage = ({
                             </div>
                         </div>
                     </div>
-                    <div className="lg:pl-10 xl:pr-16 py-10">
+                    <div className="lg:pl-10 xl:pr-8 py-10">
                         <div className="flex justify-between items-center mb-4">
                             <h1 className="font-bold text-lg">Get Started w/ Docker in ROS2</h1>
                             <Dropdown tags={commands.map((command: string) => command.split(':')[1])}
@@ -146,9 +149,9 @@ const IndividualModelPage = ({
                         <Markdown>
                             {currentCommand}
                         </Markdown>
-                        <p className="mt-4 text-sm text-gray-600">For easier set up and installation, use our <a
-                            className="text-violet-500">Shade Client</a></p>
-                        <p className="text-sm text-gray-600 mt-1">More information on using Docker on <a
+                        {/* <p className="mt-4 text-sm text-gray-600">For easier set up and installation, use our <a
+                            className="text-violet-500">Shade Client</a></p> */}
+                        <p className="text-sm text-gray-600 mt-3">More information on using Docker on <a
                             href={model.github} target="_blank" className="text-blue-500" rel="noreferrer">GitHub</a>
                         </p>
                     </div>
@@ -203,11 +206,9 @@ export async function getStaticProps({params}: any) {
     }
 
     const githubSlug = model?.github.split('github.com/')[1]
-    console.log(githubSlug)
     const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/main/README.md`)
     let markdown = await res.text()
 
-    console.log(markdown)
 
     if (markdown.indexOf('404: Not Found') !== -1) {
         const res = await fetch(`https://raw.githubusercontent.com/${githubSlug}/master/README.md`)

@@ -8,7 +8,7 @@ import Labels from '../model/Labels';
 const ModelCard = ({ model }: { model: Model }) => {
     return (
         <Link href={`/models/${model.id}`}>
-            <div className="cursor-pointer border p-6 flex flex-col h-full rounded-md border-gray-100 shadow-md shadow-gray-100">
+            <div className="cursor-pointer hover:shadow-lg hover:border-gray-200 transition border p-6 flex flex-col h-full rounded-md border-gray-100 shadow-md shadow-gray-100">
                 <div className="flex justify-between items-center">
                     <h1 className="font-mono font-semibold tracking-tight w-4/5 text-md">{model.name}</h1>
                     <div className="flex items-center ml-4 p-4 rounded-full border-gray-200 border">

@@ -13,6 +13,7 @@ import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json'
 import python from 'react-syntax-highlighter/dist/cjs/languages/prism/python'
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import rehypeRaw from 'rehype-raw'
+import remarkGfm from 'remark-gfm'
 
 
 export let LANGUAGES: string[] = []
@@ -82,6 +83,7 @@ export const Markdown = ({ children }: { children: string }) => {
     return (
         <ReactMarkdown
             rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkGfm]}
             className="flex-auto max-w-full break-all sm:break-normal prose prose-md hover:prose-a:text-blue-500 prose-a:text-blue-600 prose-h1:text-3xl prose-h1:mt-8 markdown"
             components={{
                 code({ node, inline, className, children, ...props }) {
