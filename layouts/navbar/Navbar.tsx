@@ -103,19 +103,33 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="hidden xl:ml-4 lg:flex lg:items-center">
+              <div className="hidden xl:ml-4 lg:flex lg:items-center">                
                 <a
-                  href="#"
-                  className="border-transparent text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  href="https://discord.gg/XqVse4Maw2"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="
+                    inline-flex
+                    items-center
+                    justify-center
+                    w-full
+                    px-4
+                    py-2
+                    border border-transparent
+                    text-sm
+                    rounded
+                    font-semibold
+                    text-white
+                    gap-4
+                    bg-indigo-400
+                    hover:bg-indigo-500
+                  "
                 >
-                  Sign In
-                </a>
-                <a
-                  href="https://shaderobotics.com/contact"
-                  className="block m-5 px-5 py-2 text-center font-medium text-sm text-white border-rose-400 border text-rose-400 hover:bg-rose-50 rounded-md"
-                >
-                  Book a Demo
-                </a>
+                  <span>
+                    Join Our Discord
+                  </span>
+                  <Image src={'/discord-white.svg'} alt="discord" className="w-4 h-4" width={25} height={25} />
+                </a>     
               </div>
             </div>
           </div>
