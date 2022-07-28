@@ -10,8 +10,8 @@ const ModelCard = ({ model }: { model: Model }) => {
         <Link href={`/models/${model.id}`}>
             <div className="cursor-pointer border p-6 flex flex-col h-full rounded-md border-gray-100 shadow-md shadow-gray-100">
                 <div className="flex justify-between items-center">
-                    <h1 className="font-mono font-medium tracking-tight w-4/5 text-md">{model.name}</h1>
-                    <div className="flex items-center p-4 rounded-full border-gray-200 border">
+                    <h1 className="font-mono font-semibold tracking-tight w-4/5 text-md">{model.name}</h1>
+                    <div className="flex items-center ml-4 p-4 rounded-full border-gray-200 border">
                         <Image
                             height={15}
                             width={15}
