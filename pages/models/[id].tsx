@@ -98,9 +98,9 @@ const IndividualModelPage = ({
                 <a
                             href={model.github}
                             target="_blank"
-                            className="float-right mb-8 inline-flex w-full sm:w-auto items-center px-5 py-3 mt-6 border border-transparent shadow-sm 
-                            text-base rounded-md text-white bg-gray-700 hover:bg-gray-800 
-                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" rel="noreferrer"
+                            className="float-right mb-8 inline-flex w-full sm:w-auto items-center px-4 py-2 mt-7 border border-transparent
+                            text-base rounded-md text-gray-500 border-gray-200 hover:bg-gray-50
+                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300" rel="noreferrer"
                         >
                             <svg
                                 className="w-5 h-5 mr-5"
